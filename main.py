@@ -8,6 +8,8 @@ from dash import Dash
 import pandas_example.Pandas001
 import pandas_example.Pandas002
 
+import csv
+
 print("hello world")
 
 # 주피터 노트북은 위에 코드가 실행되어야 아래 코드를 활성화 가능하나,
@@ -20,7 +22,8 @@ app = Flask(__name__)
 #요청이 들어왔다는 확인만 되면 하단에 있는 함수 실행 (EX: def hello_world())
 @app.route('/')
 def hello_world():
-    data1 = pandas_example.Pandas001.Pandas001(20, 30)
+    # pandas_example이라는 패키지 안에 Pandas001 파일 안에 있는 Pandas001 클래스 파일의 생성자 호출
+    data1 = pandas_example.Pandas001.Pandas001(20, 30, 20)
     print(data1.get_data001())
     return "testString"
 
@@ -37,6 +40,9 @@ def read_spring_data_example():
         url = "http://localhost:8090/csvlink?csvRequest=covid19"
         #respnse 변수에 requests 패키지 안에 있는 get함수 실행 (url 변수값은 위에 문자열url값으로 전달)
         response = requests.get(url=url)
+        print(response.content)
+        print(response.text)
+        print(response.json)
         print(response)
         return "testGET"
 
