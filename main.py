@@ -1,16 +1,31 @@
-# This is a sample Python script.
+from flask import *
+import requests
+from dash import Dash
+import pandas_example.Pandas001
+import pandas_example.Pandas002
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+print("hello world")
+
+app = Flask(__name__)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@app.route('/')
+def hello_world():
+    data1 = pandas_example.Pandas001.Pandas001(20, 30)
+    print(data1.get_data001())
+    return "testString"
 
 
-# Press the green button in the gutter to run the script.
+@app.route('/read_spring_data_example', methods=['GET', 'POST'])
+def read_spring_data_example():
+    if request.method == 'POST':
+        return "testPost"
+    if request.method == 'GET':
+        url = "http://localhost:8090/csvlink?csvRequest=covid19"
+        response = requests.get(url=url)
+        print(response)
+        return "testGET"
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    app.run()
