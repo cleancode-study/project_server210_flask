@@ -3,19 +3,15 @@ from flask import Flask, request
 # 처음부터 import가 있을 경우는 내장 라이브러리 혹은 내장 패키지이다
 # 내장 패키지인 requests를 사용하겠다
 import requests
-from dash import Dash
 # 개발자가 만든 패키지와 class
-import pandas_example.Pandas001
-import pandas_example.Pandas002
-import component_pandas_example.Pandas_compoenet001 as component_pd
-import machinelearning_example.Sklean001
+import temp.pandas_example.Pandas001
+from temp import component_pandas_example as component_pd
+import temp.machinelearning_example.Sklean001
 
 import pandas as pd
 
-import csv
-
 print("hello world")
-pandas_example.Pandas001.Pandas001.get_dataframe_set()
+temp.pandas_example.Pandas001.Pandas001.get_dataframe_set()
 component_pd.fuc_test()
 
 # 주피터 노트북은 위에 코드가 실행되어야 아래 코드를 활성화 가능하나,
@@ -29,9 +25,9 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     # pandas_example이라는 패키지 안에 Pandas001 파일 안에 있는 Pandas001 클래스 파일의 생성자 호출
-    data1 = pandas_example.Pandas001.Pandas001(20, 30, 20)
+    data1 = temp.pandas_example.Pandas001.Pandas001(20, 30, 20)
     print(data1.get_data001())
-    data2 = machinelearning_example.Sklean001.Sklean001
+    data2 = temp.machinelearning_example.Sklean001.Sklean001
     # data2.read_csv()
     data_csv = pd.read_csv(
         "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/11-02-2021.csv")
