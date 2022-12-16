@@ -59,6 +59,9 @@ def read_spring_data_example():
         print(response)
         return "testGET"
 
+
+
+
 # __name__변수가 문자열 '__main__'일 경우 app변수(Flask)의 run()함수가 실행된다
 if __name__ == '__main__':
     app.run()
