@@ -1,7 +1,11 @@
 import matplotlib.pyplot as plt
+import csv
+import pandas as pd
 
 class Sklean001:
     def __init__(self):
+        self.data_csv = pd.read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/11-02-2021.csv")
+        print(self.data_csv)
         self.bream_length = [25.4, 26.3, 26.5, 29.0, 29.0, 29.7, 29.7, 30.0, 30.0, 30.7, 31.0, 31.0, 31.5, 32.0, 32.0,
                              32.0,
                              33.0,
@@ -15,3 +19,7 @@ class Sklean001:
 
     def read_bream_length_data(self):
         return 20
+
+    def read_csv(self):
+        print(self.data_csv)
+

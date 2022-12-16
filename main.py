@@ -7,10 +7,16 @@ from dash import Dash
 # 개발자가 만든 패키지와 class
 import pandas_example.Pandas001
 import pandas_example.Pandas002
+import component_pandas_example.Pandas_compoenet001 as component_pd
+import machinelearning_example.Sklean001
+
+import pandas as pd
 
 import csv
 
 print("hello world")
+pandas_example.Pandas001.Pandas001.get_dataframe_set()
+component_pd.fuc_test()
 
 # 주피터 노트북은 위에 코드가 실행되어야 아래 코드를 활성화 가능하나,
 # 일반 파이썬의 함수는 프로그램이 시작되는 시점에 가장 먼저 load = static method (def : 함수)
@@ -25,6 +31,13 @@ def hello_world():
     # pandas_example이라는 패키지 안에 Pandas001 파일 안에 있는 Pandas001 클래스 파일의 생성자 호출
     data1 = pandas_example.Pandas001.Pandas001(20, 30, 20)
     print(data1.get_data001())
+    data2 = machinelearning_example.Sklean001.Sklean001
+    # data2.read_csv()
+    data_csv = pd.read_csv(
+        "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/11-02-2021.csv")
+    print(component_pd.fuc_import_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/11-02-2021.csv"))
+    data_csv.to_csv("file_test4.csv", index=False)
+    component_pd.fuc_export_csv()
     return "testString"
 
 

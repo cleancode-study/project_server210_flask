@@ -22,3 +22,7 @@ class Pandas001:
 
     def get_data003(self):
         return self.data003
+
+    @staticmethod
+    def get_dataframe_set():
+        print("data frame test")
