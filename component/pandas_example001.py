@@ -43,5 +43,3 @@ def read_url(var1):
     url = "http://localhost:8090/csvlink?csvRequest="+var1
     response = requests.get(url=url)
     return response.text
-
-pandas_config("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/11-02-2021.csv")
