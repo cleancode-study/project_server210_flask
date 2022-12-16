@@ -20,6 +20,13 @@ def save_pandas():
     df.to_csv(export_title_name("file_name"), index=False)
 
 def pandas_config(url_var1):
+    """
+    지난 프로젝트 혹은 통계데이터 csv를 github에 저장하고,
+    springboot서버의 @Controller의 @GetMapping("/csvlink")의 메서드에 할당된 DB내용을 github link주소를 추가하고 조회할 수 있도록 추가하시오.
+    flask에서 springboot를 사용하여 csv파일을 읽어올 수 있도록 함수를 완성하시오
+    :param url_var1:
+    :return:
+    """
     var1 = pd.read_csv(url_var1)
     print(var1)
 
