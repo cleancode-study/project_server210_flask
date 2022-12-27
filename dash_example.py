@@ -1,11 +1,8 @@
-from flask import Flask, request
-import component.pandas_example001 as ps
 from dash import Dash, html, dcc
 import plotly.express as px
-import requests
 
-# ------------------ graph and dataframe example
-df = px.data.iris() # iris data 불러오기
+
+df = px.data.iris() # 데이터(csv 또는 pandas.dataframe 블러오기)
 # plotly를 이용한 산점도
 fig = px.scatter(df, x="sepal_length", y="sepal_width",
                  color="species")
@@ -13,15 +10,7 @@ fig = px.scatter(df, x="sepal_length", y="sepal_width",
 fig_another = px.scatter(df, x="sepal_length", y="sepal_width",
                          color="species")
 
-app = Flask(__name__)
-
-
-# server110 연동 route
-@app.route('/init_pandas', methods=['GET'])
-def init_pandas():
-    result = ps.read_url("covid19")
-    ps.pandas_config(result)
-    return result
+app = Dash(__name__)
 
 app.layout = html.Div(children=[
     # dash.core.component(dcc)의 그래프컴포넌트로 plotly 그래프 렌더링
@@ -36,8 +25,4 @@ app.layout = html.Div(children=[
 ])
 
 if __name__ == '__main__':
-    app.run()
-
-
-
-
+    app.run_server(debug=True, host='0.0.0.0', port=80)
