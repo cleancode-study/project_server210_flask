@@ -4,6 +4,8 @@ from datetime import datetime
 import requests
 
 
+# ---------------------------------------------------------------------
+# csv setup
 def save_pandas():
     """
     create dataframe
@@ -18,6 +20,7 @@ def save_pandas():
     df['cost'] = cost
 
     df.to_csv(export_title_name("file_name"), index=False)
+
 
 def pandas_config(url_var1):
     """
@@ -40,6 +43,6 @@ def export_title_name(var1):
 
 
 def read_url(var1):
-    url = "http://localhost:8090/csvlink?csvRequest="+var1
+    url = "http://localhost:8090/csvlink?csvRequest=" + var1
     response = requests.get(url=url)
     return response.text

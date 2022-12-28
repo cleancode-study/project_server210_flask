@@ -11,7 +11,8 @@ import flask
 
 import plotly.express as px
 from dash import Dash, html, dcc
-import layout.dash_app11 as d11
+import dataframe.dash_app_dataframe as dash_app_dataframe
+import layout.bar_chart as bar_chart
 
 # server start
 application = flask.Flask(__name__)
@@ -22,39 +23,25 @@ application = flask.Flask(__name__)
 dash_app1 = Dash(__name__, server=application, url_base_pathname='/dashapp1/')
 dash_app2 = Dash(__name__, server=application, url_base_pathname='/dashapp2/')
 
-# flask app start
-@application.route('/')
-def index():
-    print('flask app index()')
-    return 'index'
-
-
 # --------------------------------------------------------------------------------------------------------
 # dash app1
-# dash 페이지의 html을 구성하는 layout 변수
-dash_app1.layout = html.Div(children=[
-    html.Div(
-        html.Button(
-            dcc.Link(href='/dashapp1/', refresh=True),
-        )
-    ),
-    html.Div(
-        dcc.Link(href='/dashapp2/', refresh=True),
-    ),
-    dcc.Graph(
-        id='graph1',
-        figure=d11.fig_data()
-    ),
-])
+# dash 페이지의 html을 구성하는 dataframe 변수
+dash_app1.layout = bar_chart.bar_chart_sample()
 
 # --------------------------------------------------------------------------------------------------------
 # dash app2
 dash_app2.layout = html.Div(children=[
     dcc.Graph(
         id='graph1',
-        figure=d11.fig_data()
+        figure=dash_app_dataframe.fig_data()
     )
 ])
+
+# # flask app start
+# @application.route('/')
+# def index():
+#     print('flask app index()')
+#     return 'index'
 
 # run app : flask서버 기동
 # __main__ : web python 코드의 시작점을 알려주는 변수
