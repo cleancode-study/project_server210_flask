@@ -31,12 +31,6 @@ def index():
 
 # --------------------------------------------------------------------------------------------------------
 # dash app1
-
-# 데이터
-df = px.data.iris()
-fig_1 = px.scatter(df, x="sepal_length", y="sepal_width",
-                 color="species")
-
 # dash 페이지의 html을 구성하는 layout 변수
 dash_app1.layout = html.Div(children=[
     html.Div(
@@ -55,14 +49,10 @@ dash_app1.layout = html.Div(children=[
 
 # --------------------------------------------------------------------------------------------------------
 # dash app2
-
-fig_2 = px.scatter(df, x="sepal_length", y="sepal_width",
-                 color="species")
-
 dash_app2.layout = html.Div(children=[
     dcc.Graph(
         id='graph1',
-        figure=fig_2
+        figure=d11.fig_data()
     )
 ])
 
