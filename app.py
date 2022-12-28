@@ -1,4 +1,4 @@
-import flask
+from flask import Flask, render_template, request
 
 # dash : plotly 라이브러리에서 python 버전으로 출시된 웹기반 그래프 출력 라이브러리 (javascript plotly와 유사)
 # https://plotly.com/python/
@@ -15,17 +15,36 @@ import dataframe.dash_app_dataframe as dash_app_dataframe
 import layout.bar_chart as bar_chart
 
 # server start
-application = flask.Flask(__name__)
+application = Flask(__name__)
 
 # dash app with flask server : fask에 dash 라이브러리 추가 route
 # server=application : flask 서버(application 변수명)를 사용하여 
 # url_base_pathname='/dashapp1/' 경로명에 dash 라이브러리 페이지를 출력한다 >> 변수 dash_app1에 저장한다
+# Dash라는 패키지 생성자를 사용하여 하나의 page를 생성
+# Dash(__name__(시작 메서드), server=application(연동하는 서버 변수), url_base_pathname='/dashapp1/'(URL주소))
 dash_app1 = Dash(__name__, server=application, url_base_pathname='/dashapp1/')
 dash_app2 = Dash(__name__, server=application, url_base_pathname='/dashapp2/')
+
+# flask app start
+# GET : URL 주소로 데이터 전달하는 방식 : String
+@application.route('/', methods=['GET'])
+def index():
+    print('flask app index()')
+    return render_template('index.html')
+
+
+# POST : URL 주소가 아닌 BODY에 데이터 전달하는 방식 : 객체
+@application.route('/', methods=['POST'])
+def index_POST():
+    print('flask app index()')
+    test = int(request.form['test'])
+    print(test)
+    return render_template('index_output.html', data=test)
 
 # --------------------------------------------------------------------------------------------------------
 # dash app1
 # dash 페이지의 html을 구성하는 dataframe 변수
+# 만들어진 dash page 안에 html구조 생성 : layout
 dash_app1.layout = bar_chart.bar_chart_sample()
 
 # --------------------------------------------------------------------------------------------------------
@@ -37,14 +56,8 @@ dash_app2.layout = html.Div(children=[
     )
 ])
 
-# # flask app start
-# @application.route('/')
-# def index():
-#     print('flask app index()')
-#     return 'index'
-
 # run app : flask서버 기동
 # __main__ : web python 코드의 시작점을 알려주는 변수
 if __name__ == "__main__":
-    application.debug = True
+    # application.debug = True
     application.run()
