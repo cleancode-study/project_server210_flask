@@ -14,15 +14,18 @@ from dash import Dash, html, dcc
 import dataframe.dash_app_dataframe as dash_app_dataframe
 import layout.bar_chart as bar_chart
 
+external_stylesheets = ["style.css"]
+
 # server start
 application = Flask(__name__)
+
 
 # dash app with flask server : fask에 dash 라이브러리 추가 route
 # server=application : flask 서버(application 변수명)를 사용하여 
 # url_base_pathname='/dashapp1/' 경로명에 dash 라이브러리 페이지를 출력한다 >> 변수 dash_app1에 저장한다
 # Dash라는 패키지 생성자를 사용하여 하나의 page를 생성
 # Dash(__name__(시작 메서드), server=application(연동하는 서버 변수), url_base_pathname='/dashapp1/'(URL주소))
-dash_app1 = Dash(__name__, server=application, url_base_pathname='/dashapp1/')
+dash_app1 = Dash(__name__, server=application, url_base_pathname='/dashapp1/', external_stylesheets=external_stylesheets)
 dash_app2 = Dash(__name__, server=application, url_base_pathname='/dashapp2/')
 
 # flask app start
