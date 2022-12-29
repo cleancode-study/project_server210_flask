@@ -63,4 +63,4 @@ dash_app2.layout = html.Div(children=[
 # __main__ : web python 코드의 시작점을 알려주는 변수
 if __name__ == "__main__":
     # application.debug = True
-    application.run()
+    application.run('0.0.0.0', port=80)
