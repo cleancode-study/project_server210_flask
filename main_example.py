@@ -34,9 +34,9 @@ app.layout = html.Div(children=[
         figure=fig_another
     ),
 ])
-
-if __name__ == '__main__':
-    app.run()
+#
+# if __name__ == '__main__':
+#     app.run()
 
 
 

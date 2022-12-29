@@ -23,6 +23,6 @@ app.layout = html.Div(children=[
         figure=fig_another
     ),
 ])
-
-if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port=80)
+#
+# if __name__ == '__main__':
+#     app.run_server(debug=True, host='0.0.0.0', port=80)
