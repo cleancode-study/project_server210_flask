@@ -2,11 +2,11 @@ import dataframe.dash_app_dataframe as dash_app_dataframe
 from dash import html, dcc
 
 
-def bar_chart_sample():
+def bar_chart_sample(test):
     sample_layout = html.Div(children=[
         html.Div(
             html.Button(
-                dcc.Link(href='/dashapp1/', refresh=True),
+                dcc.Link(href=test, refresh=True),
             )
         ),
         html.Div(

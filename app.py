@@ -1,3 +1,4 @@
+import flask
 from flask import Flask, render_template, request
 
 # dash : plotly 라이브러리에서 python 버전으로 출시된 웹기반 그래프 출력 라이브러리 (javascript plotly와 유사)
@@ -25,7 +26,8 @@ application = Flask(__name__)
 # url_base_pathname='/dashapp1/' 경로명에 dash 라이브러리 페이지를 출력한다 >> 변수 dash_app1에 저장한다
 # Dash라는 패키지 생성자를 사용하여 하나의 page를 생성
 # Dash(__name__(시작 메서드), server=application(연동하는 서버 변수), url_base_pathname='/dashapp1/'(URL주소))
-dash_app1 = Dash(__name__, server=application, url_base_pathname='/dashapp1/', external_stylesheets=external_stylesheets)
+# title 속성으로 매개변수 전달
+dash_app1 = Dash(__name__, server=application, url_base_pathname='/dashapp1/', external_stylesheets=external_stylesheets, title='/dashapp1/')
 dash_app2 = Dash(__name__, server=application, url_base_pathname='/dashapp2/')
 
 # flask app start
@@ -44,11 +46,16 @@ def index_POST():
     print(test)
     return render_template('index_output.html', data=test)
 
+# dynamic route
+@application.route('/dynamic/<pagename>',  methods=['GET'])
+def hello(pagename):
+    return render_template('index_output.html', data=pagename)
+
 # --------------------------------------------------------------------------------------------------------
 # dash app1
 # dash 페이지의 html을 구성하는 dataframe 변수
 # 만들어진 dash page 안에 html구조 생성 : layout
-dash_app1.layout = bar_chart.bar_chart_sample()
+dash_app1.layout = bar_chart.bar_chart_sample(dash_app1.title)
 
 # --------------------------------------------------------------------------------------------------------
 # dash app2
