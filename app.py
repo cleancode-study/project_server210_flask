@@ -29,6 +29,7 @@ application = Flask(__name__)
 # title 속성으로 매개변수 전달
 dash_app1 = Dash(__name__, server=application, url_base_pathname='/dashapp1/', external_stylesheets=external_stylesheets, title='/dashapp1/')
 dash_app2 = Dash(__name__, server=application, url_base_pathname='/dashapp2/')
+dash_app3 = Dash(__name__, server=application, url_base_pathname='/pp1/', external_stylesheets=external_stylesheets, title='sample1')
 
 # flask app start
 # GET : URL 주소로 데이터 전달하는 방식 : String
@@ -65,6 +66,10 @@ dash_app2.layout = html.Div(children=[
         figure=dash_app_dataframe.fig_data()
     )
 ])
+
+# --------------------------------------------------------------------------------------------------------
+# dash app3 - pp example
+dash_app3.layout = bar_chart.pp_graph_sample(dash_app3.title)
 
 # run app : flask서버 기동
 # __main__ : web python 코드의 시작점을 알려주는 변수
