@@ -8,7 +8,7 @@ import pandas as pd
 # 데이터 전처리 함수
 def preprocessing():
     df1 = pd.read_csv(
-        'https://raw.githubusercontent.com/cleancode-study/project_server210_flask/main/component/2017_sample.csv')
+        'https://raw.githubusercontent.com/cleancode-study/project_server210_flask/main/component/2017.csv')
     print(df1)
     df1.drop(["구강검진수검여부", "치아우식증유무", "결손치유무", "치아마모증유무", "제3대구치(사랑니)이상",
               "치석", "데이터공개일자", "기준년도", "가입자일련번호", "시도코드",
