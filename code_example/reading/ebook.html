@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>ebook</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+
+</head>
+<div class="main">
+</div>
+<!--<details>-->
+<!--    <summary>'스마트폰 보급이후 독서량'</summary>-->
+<!--</details>-->
+
+
+<div class="main_1">
+</div>
+
+
+
+<div class="main_2">
+</div>
+
+
+<div class="main_3">
+</div>
+
+
+
+
+
+
+
+
+<body>
+
+<script>
+$.ajax({
+    url:'독서량_encode.txt' ,
+    dataType: 'text',
+    contentType: 'application/x-www-form-urlencoded;charset=utf-8'
+}).done(successFunction);
+
+function successFunction(data) {
+  var allRows = data.split(/\r?\n|\r/);
+  console.log(data);
+  console.log('한글 테스트');
+  var table = '<table>';
+  for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
+    if (singleRow === 0) {
+      table += '<thead>';
+      table += '<tr>';
+    } else {
+      table += '<tr>';
+    }
+    var rowCells = allRows[singleRow].split(',');
+    for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
+      if (singleRow === 0) {
+        table += '<th>';
+        table += rowCells[rowCell];
+        table += '</th>';
+      } else {
+        table += '<td>';
+        table += rowCells[rowCell];
+        table += '</td>';
+      }
+    }
+    if (singleRow === 0) {
+      table += '</tr>';
+      table += '</thead>';
+      table += '<tbody>';
+    } else {
+      table += '</tr>';
+    }
+  }
+  table += '</tbody>';
+  table += '</table>';
+  $('.main').append(table);
+
+<!--  특정태그에 접근하여 css속성을 변경(추가)-->
+  $('table').css({'border':'2px solid black', 'font-size':'10px', 'word-break': 'keep-all',
+  backgroundcolor:white });
+
+}
+</script>
+
+
+
+<script>
+$.ajax({
+    url:'스마트폰 보급이후 독서량_encode.txt' ,
+    dataType: 'text',
+    contentType: 'application/x-www-form-urlencoded;charset=utf-8'
+}).done(successFunction);
+
+function successFunction(data) {
+  var allRows = data.split(/\r?\n|\r/);
+  console.log(data);
+  console.log('한글 테스트');
+  var table = '<table>';
+  for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
+    if (singleRow === 0) {
+      table += '<thead>';
+      table += '<tr>';
+    } else {
+      table += '<tr>';
+    }
+    var rowCells = allRows[singleRow].split(',');
+    for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
+      if (singleRow === 0) {
+        table += '<th>';
+        table += rowCells[rowCell];
+        table += '</th>';
+      } else {
+        table += '<td>';
+        table += rowCells[rowCell];
+        table += '</td>';
+      }
+    }
+    if (singleRow === 0) {
+      table += '</tr>';
+      table += '</thead>';
+      table += '<tbody>';
+    } else {
+      table += '</tr>';
+    }
+  }
+  table += '</tbody>';
+  table += '</table>';
+  $('.main_1').append(table);
+
+<!--  특정태그에 접근하여 css속성을 변경(추가)-->
+  $('table').css({'border':'2px solid black', 'font-size':'10px', 'word-break': 'keep-all'});
+
+}
+</script>
+
+
+
+<script>
+$.ajax({
+    url:'전년 대비 독서 시간 변화  종이+전자책 (성인)_encode.txt' ,
+    contentType: 'application/x-www-form-urlencoded;charset=utf-8'
+}).done(successFunction);
+
+function successFunction(data) {
+  var allRows = data.split(/\r?\n|\r/);
+  console.log(data);
+  console.log('한글 테스트');
+  var table = '<table>';
+  for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
+    if (singleRow === 0) {
+      table += '<thead>';
+      table += '<tr>';
+    } else {
+      table += '<tr>';
+    }
+    var rowCells = allRows[singleRow].split(',');
+    for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
+      if (singleRow === 0) {
+        table += '<th>';
+        table += rowCells[rowCell];
+        table += '</th>';
+      } else {
+        table += '<td>';
+        table += rowCells[rowCell];
+        table += '</td>';
+      }
+    }
+    if (singleRow === 0) {
+      table += '</tr>';
+      table += '</thead>';
+      table += '<tbody>';
+    } else {
+      table += '</tr>';
+    }
+  }
+  table += '</tbody>';
+  table += '</table>';
+  $('.main_2').append(table);
+
+
+<!--  특정태그에 접근하여 css속성을 변경(추가)-->
+  $('table').css({'border':'2px solid black', 'font-size':'10px', 'word-break': 'keep-all'});
+
+}
+</script>
+
+
+
+<script>
+$.ajax({
+    url:'전년 대비 독서 시간 변화  종이+전자책 (학생)_encode.txt' ,
+    contentType: 'application/x-www-form-urlencoded;charset=utf-8'
+}).done(successFunction);
+
+function successFunction(data) {
+  var allRows = data.split(/\r?\n|\r/);
+  console.log(data);
+  console.log('한글 테스트');
+  var table = '<table>';
+  for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
+    if (singleRow === 0) {
+      table += '<thead>';
+      table += '<tr>';
+    } else {
+      table += '<tr>';
+    }
+    var rowCells = allRows[singleRow].split(',');
+    for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
+      if (singleRow === 0) {
+        table += '<th>';
+        table += rowCells[rowCell];
+        table += '</th>';
+      } else {
+        table += '<td>';
+        table += rowCells[rowCell];
+        table += '</td>';
+      }
+    }
+    if (singleRow === 0) {
+      table += '</tr>';
+      table += '</thead>';
+      table += '<tbody>';
+    } else {
+      table += '</tr>';
+    }
+  }
+  table += '</tbody>';
+  table += '</table>';
+  $('.main_3').append(table);
+
+
+<!--  특정태그에 접근하여 css속성을 변경(추가)-->
+  $('table').css({'border':'2px solid black', 'font-size':'10px', 'word-break': 'keep-all'});
+
+}
+</script>
+
+</body>
+</html>
