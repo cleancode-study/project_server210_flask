@@ -11,7 +11,7 @@ from flask import Flask, render_template, request
 # callback : 매개변수, 전역변수를 담당하는 함수
 
 import plotly.express as px
-from dash import Dash, html, dcc
+from dash import Dash, html, dcc, Input, Output
 import dataframe.dash_app_dataframe as dash_app_dataframe
 import layout.bar_chart as bar_chart
 
@@ -61,15 +61,26 @@ dash_app1.layout = bar_chart.bar_chart_sample(dash_app1.title)
 # --------------------------------------------------------------------------------------------------------
 # dash app2
 dash_app2.layout = html.Div(children=[
-    dcc.Graph(
-        id='graph1',
-        figure=dash_app_dataframe.fig_data()
-    )
+    dcc.Dropdown([1990, 1991, 1992], 1990, id='year-slider'),
+    dcc.Graph(id='graph-with-slider'),
 ])
+
+
+@dash_app2.callback(
+    Output('graph-with-slider', 'figure'),
+    Input('year-slider', 'value')
+)
+def update_output(value):
+    print(value)
+    fig = dash_app_dataframe.fig_data(value)
+    print(fig)
+    fig.update_layout(transition_duration=500)
+    return fig
 
 # --------------------------------------------------------------------------------------------------------
 # dash app3 - pp example
-dash_app3.layout = bar_chart.pp_graph_sample(dash_app3.title)
+dash_app3.layout = bar_chart.bar_chart_sample(dash_app1.title)
+# dash_app3.layout = bar_chart.pp_graph_sample(dash_app3.title)
 
 # run app : flask서버 기동
 # __main__ : web python 코드의 시작점을 알려주는 변수

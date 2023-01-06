@@ -14,7 +14,7 @@ def bar_chart_sample(test):
         ),
         dcc.Graph(
             id='graph1',
-            figure=dash_app_dataframe.fig_data()
+            figure=dash_app_dataframe.fig_data(1990)
         ),
     ])
     return sample_layout
