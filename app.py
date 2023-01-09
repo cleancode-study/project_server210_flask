@@ -30,6 +30,7 @@ application = Flask(__name__)
 dash_app1 = Dash(__name__, server=application, url_base_pathname='/dashapp1/', external_stylesheets=external_stylesheets, title='/dashapp1/')
 dash_app2 = Dash(__name__, server=application, url_base_pathname='/dashapp2/')
 dash_app3 = Dash(__name__, server=application, url_base_pathname='/pp1/', external_stylesheets=external_stylesheets, title='sample1')
+dash_app4 = Dash(__name__, server=application, url_base_pathname='/mappie/')
 
 # flask app start
 # GET : URL 주소로 데이터 전달하는 방식 : String
@@ -81,6 +82,10 @@ def update_output(value):
 # dash app3 - pp example
 dash_app3.layout = bar_chart.bar_chart_sample(dash_app1.title)
 # dash_app3.layout = bar_chart.pp_graph_sample(dash_app3.title)
+
+# --------------------------------------------------------------------------------------------------------
+# dash app4
+dash_app4.layout = bar_chart.mappie_example()
 
 # run app : flask서버 기동
 # __main__ : web python 코드의 시작점을 알려주는 변수
