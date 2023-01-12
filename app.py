@@ -1,5 +1,5 @@
-import flask
-from flask import Flask, render_template, request
+# import flask
+from flask import Flask, render_template, request, jsonify
 
 # dash : plotly 라이브러리에서 python 버전으로 출시된 웹기반 그래프 출력 라이브러리 (javascript plotly와 유사)
 # https://plotly.com/python/
@@ -14,11 +14,14 @@ import plotly.express as px
 from dash import Dash, html, dcc, Input, Output
 import dataframe.dash_app_dataframe as dash_app_dataframe
 import layout.bar_chart as bar_chart
+from block.Blockchain import Blockchain
 
 external_stylesheets = ["style.css"]
 
 # server start
 application = Flask(__name__)
+application.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+blockchain = Blockchain()
 
 
 # dash app with flask server : fask에 dash 라이브러리 추가 route
@@ -52,6 +55,29 @@ def index_POST():
 @application.route('/dynamic/<pagename>',  methods=['GET'])
 def hello(pagename):
     return render_template('index_output.html', data=pagename)
+
+@application.route('/mine_block', methods = ['GET'])
+def mine_block():
+    print('mined a block')
+    previous_block = blockchain.get_previous_block()
+    previous_proof = previous_block['proof']
+    proof = blockchain.proof_of_work(previous_proof)
+    previous_hash = blockchain.hash(previous_block)
+    block = blockchain.create_block(proof, previous_hash)
+    responses = {
+        'message': 'Congratulations, you just mined a block!',
+        **block
+    }
+    return jsonify(responses), 200
+
+
+@application.route('/get_chain', methods = ['GET'])
+def get_chain():
+    response = {
+        'chain': blockchain.chain,
+        'length': len(blockchain.chain)
+    }
+    return jsonify(response), 200
 
 # --------------------------------------------------------------------------------------------------------
 # dash app1

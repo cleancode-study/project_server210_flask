@@ -1,0 +1,72 @@
+$(function () {
+  let clickedShowOntactAgreeInfoBtn = false;
+  $("#showOntactAgreeInfoBtn").click(function() {
+    clickedShowOntactAgreeInfoBtn = true;
+  });
+	$("#contactBtn").click(function () {
+		if ($("input:checkbox[name=work_type]:checked").length === 0) {
+			alert("의뢰하시고자 하는 제품 유형을 1가지 이상 선택해주세요.");
+			return;
+		}
+		if ($.trim($("#description").val()) == "") {
+			alert("의뢰하시는 제품에 대해 간단하게 설명해 주세요.");
+			return;
+		}
+		if ($.trim($("#budget").val()) == "") {
+			alert("구매예산을 입력해 주세요.");
+			return;
+		}
+		if ($.trim($("#name").val()) == "") {
+			alert("담당자 성명/직급을 입력해 주세요.");
+			return;
+		}
+		if ($.trim($("#phoneNumber").val()) == "") {
+			alert("담당자 연락처를 입력해 주세요.");
+			return;
+		}
+    const ontactEmail = $.trim($("#email").val());
+		if (ontactEmail == "") {
+			alert("담당자 이메일을 입력해 주세요.");
+			return;
+		}
+    const emailRE = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!emailRE.test(String(ontactEmail).toLowerCase())) {
+			alert("이메일 형식으로 입력해 주세요.");
+			return;
+		}
+		if (!clickedShowOntactAgreeInfoBtn) {
+      alert('개인정보 수집 및 이용 전문 확인이 필요합니다.');
+      return;
+    }
+    if ($('#ontactAgreeCheckbox:checked').length === 0) {
+      alert('개인정보 수집 및 이용동의가 필요합니다.');
+      return;
+    }
+		let html = "문의유형 : ";
+		const contactTypes = $("input:checkbox[name=work_type]:checked")
+			.map(function () {
+				return $(this).val();
+			})
+			.toArray()
+			.join(", ");
+		html += contactTypes + "<br />";
+		html += "01. 의뢰내용 <br />";
+		html += `설명 : ${$("#description").val()}<br />`;
+		html += `구매예산 : ${$("#budget").val()}<br />`;
+		html += "02. 담당자 정보 <br />";
+		html += `회사/단체명 : ${$("#company").val()}<br />`;
+		html += `담당자 성명/직급 : ${$("#name").val()}<br />`;
+		html += `담당자 연락처 : ${$("#phoneNumber").val()}<br />`;
+		html += `담당자 이메일 : ${$("#email").val()}<br />`;
+		$.post(
+			"/api/contact",
+			{ title: "코오롱워크웨어 일반 문의입니다.", html: html },
+			function (data) {
+				if (data && data.status == "ok") {
+					alert("상담신청이 등록되었습니다.");
+					location.reload();
+				}
+			}
+		);
+	});
+});

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)https://www.kolonworkwear.com/ -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./KOLON WORKWEAR_files/analytics.js.다운로드"></script><script>(function(){function hookGeo() {
+  //<![CDATA[
+  const WAIT_TIME = 100;
+  const hookedObj = {
+    getCurrentPosition: navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),
+    watchPosition: navigator.geolocation.watchPosition.bind(navigator.geolocation),
+    fakeGeo: true,
+    genLat: 38.883333,
+    genLon: -77.000
+  };
+
+  function waitGetCurrentPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        hookedObj.tmp_successCallback({
+          coords: {
+            latitude: hookedObj.genLat,
+            longitude: hookedObj.genLon,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        hookedObj.getCurrentPosition(hookedObj.tmp_successCallback, hookedObj.tmp_errorCallback, hookedObj.tmp_options);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        navigator.getCurrentPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        hookedObj.watchPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  Object.getPrototypeOf(navigator.geolocation).getCurrentPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp_successCallback = successCallback;
+    hookedObj.tmp_errorCallback = errorCallback;
+    hookedObj.tmp_options = options;
+    waitGetCurrentPosition();
+  };
+  Object.getPrototypeOf(navigator.geolocation).watchPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp2_successCallback = successCallback;
+    hookedObj.tmp2_errorCallback = errorCallback;
+    hookedObj.tmp2_options = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${hookGeo}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'updateLocation':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          hookedObj.genLat = message.info.coords.lat;
+          hookedObj.genLon = message.info.coords.lon;
+          hookedObj.fakeGeo = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}hookGeo();})()</script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+  <meta name="description" content="코오롱 워크웨어는 일하는 사람이 만들어낼 가치를 생각합니다.">
+  <meta property="og:title" content="KOLON WORKWEAR">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="600">
+  <meta property="og:image" content="https://s3-ap-northeast-2.amazonaws.com/kop.images/cms/special/upload/eff7215c-7be7-484a-bfa0-745c48f72b89/152515761_174876777521735_7927786375710524894_n.jpg">
+  <meta property="og:description" content="코오롱 워크웨어는 일하는 사람이 만들어낼 가치를 생각합니다.">
+  <title>KOLON WORKWEAR</title>
+  <link rel="shortcut icon" href="https://www.kolonworkwear.com/img/favicon/favicon.ico">
+  <link rel="icon" href="https://www.kolonworkwear.com/img/favicon/favicon-32.png" sizes="32x32">
+  <link rel="stylesheet" type="text/css" href="./KOLON WORKWEAR_files/fonts.css">
+  <!-- 폰트 css -->
+  <link rel="stylesheet" href="./KOLON WORKWEAR_files/default.css"><!-- 공통 css -->
+  <link rel="stylesheet" href="./KOLON WORKWEAR_files/contents.css"><!-- 컨텐츠 css -->
+
+  <!-- Google Analytics -->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-103804799-23', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body>
+
+  <!-- ########## wrapper// ########## -->
+  <div class="wrapper">
+    <!-- ########## header// ########## -->
+    <header class="">
+      <h1 class="logo"><a href="https://www.kolonworkwear.com/">KOLON WORKWEAR</a></h1>
+    </header>
+    <!-- ########## //header ########## -->
+
+    <!-- ########## contents// ########## -->
+    <!-- title// -->
+        <!-- //title -->
+
+        <!-- 타이틀을 제외한 컨텐츠 영역// -->
+        <!-- 210303 수정// -->
+        <!-- 상단 이미지 슬라이드 -->
+        <!-- 210310 수정// -->
+        <div class="main-top-nav conts" style="left: calc(5.2% - 219.719px);">
+            <ul class="basic-tx-ani is-active">
+                <li class="tx-line"><p><a href="https://www.kolonworkwear.com/#main_slide1" class="on">가나다</a></p></li>
+                <li class="tx-line"><p><a href="https://www.kolonworkwear.com/#main_slide2" class="">abcd</a></p></li>
+                <li class="tx-line"><p><a href="https://www.kolonworkwear.com/#main_slide3">쓰시면 됩니다</a></p></li>
+                <li class="tx-line"><p><a href="https://www.kolonworkwear.com/#main_slide4">Workwear</a></p></li>
+            </ul>
+        </div>
+        <!-- //210310 수정 -->
+        <div class="main-top conts">
+                <div class="top-p basic-tx-ani is-active">
+                    <div class="tx-line"><p>우리는&nbsp;창의적이고 </p></div>
+                    <div class="tx-line"><p>실용적인&nbsp;제품을 만들기 위해 </p></div>
+                    <div class="tx-line"><p>노력하고 있습니다</p></div>
+                </div>
+
+                <!-- 221129 수정// -->
+                <div class="slide-inner-bg-w fixed-ani" style="position: fixed; top: 0px;">
+                    <div class="r-cts">
+                        <div class="mid-pt mid-pt-1 ani-pt is-active">
+                            <div class="inner-bg" style="background-image: url(/img/main/main5bg.png);"></div>
+                            <div class="inner" style="background-image: url(/img/main/main5.png);">
+                                <!--<div class="caption">
+                                    볼디스트 모델<br>
+                                    워커 정규성
+                                </div>-->
+                            </div>
+                        </div>
+
+                        <div class="mid-pt mid-pt-2 ani-pt">
+                            <div class="inner-bg" style="background-image: url(/img/main/main6bg.png);"></div>
+                            <div class="inner" style="background-image: url(/img/main/main6.png);"></div>
+                        </div>
+
+                        <div class="mid-pt mid-pt-3 ani-pt">
+                            <div class="inner-bg" style="background-image: url(/img/main/main7bg.png);"></div>
+                            <div class="inner" style="background-image: url(/img/main/main7.png);">
+                            </div>
+                        </div>
+
+                        <div class="mid-pt mid-pt-4 ani-pt">
+                            <div class="inner-bg" style="background-image: url(/img/main/main8bg.png);"></div>
+                            <div class="inner" style="background-image: url(/img/main/main8.png);">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //221129 수정 -->
+
+                <div class="slide-inner-w">
+                    <div class="slide-inner" id="main_slide1">
+                        <div class="l-cts">
+                            <h3 class="mid-p basic-tx-ani is-active">
+                                <div class="tx-line"><p>기능과</p></div>
+                                <div class="tx-line"><p>디자인을 겸비한</p></div>
+                                <div class="tx-line"><p>새로운 워크웨어</p></div>
+                            </h3>
+
+                            <div class="bot-p ani is-active">
+                               <div class="p">
+                                    제조/건설/석유/화학 영역의 워크웨어는 <br>
+                                    코오롱이 보유한 국내 최고의 테크놀러지를 사용합니다. <br>
+                                    다양한 작업환경과 기후에 맞는 소재, 착용자의 <br>
+                                    편안함과 안전성을 위한 패턴을 제공합니다. 
+                               </div>
+                               <div class="p">
+                                    글로벌한 소재 소싱, 안정된 생산시스템을 <br>
+                                    통해 고객사를 만족시키고, 기업의 가치와 작업능률을 <br>
+                                    높여줄 최고의 워크웨어를 제안합니다.
+                               </div>
+                            </div>
+
+                            <div class="bot-lk basic-tx-ani">
+                                <div class="has-line"><p><a href="https://www.kolonworkwear.com/cs_detail3.html">자세히 보기</a></p></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-inner" id="main_slide2">
+                        <div class="l-cts">
+                            <h3 class="mid-p basic-tx-ani">
+                                <div class="tx-line"><p>스타일에</p></div>
+                                <div class="tx-line"><p>기능을 더한</p></div>
+                                <div class="tx-line"><p>스마트 SUIT</p></div>
+                            </h3>
+
+                            <div class="bot-p ani">
+                               <div class="p">
+                                    항공이나 호텔 등 서비스 계열의 기업에서는 <br>
+                                    고객을 직접 대면하는 경우가 많습니다. <br>
+                                    특히 Suit 스타일은 편안한 착용감도 필요하지만 <br>
+                                    실용적인 소재를 사용해서 관리하기도 쉬워야 합니다. <br>
+                               </div>
+                               <div class="p">
+                                    코오롱은 원단부터 봉제까지 인증기관의 검수를 거치며 불량률을 <br>
+                                    줄이는 철저한 품질관리로 완성도 있는 제품을 드립니다. 
+                               </div>
+                            </div>
+                            <div class="bot-lk basic-tx-ani">
+                                <div class="has-line"><p><a href="https://www.kolonworkwear.com/cs_detail1.html">자세히 보기</a></p></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-inner" id="main_slide3">
+                        <div class="l-cts">
+                            <h3 class="mid-p basic-tx-ani">
+                                <div class="tx-line"><p>30여년</p></div>
+                                <div class="tx-line"><p>축적된 데이터와</p></div>
+                                <div class="tx-line"><p>코오롱의 기술력</p></div>
+                            </h3>
+
+                            <div class="bot-p ani">
+                               <div class="p">
+                                    식품제조업과 유통 분야는 기업의 광고판 역할을 합니다. <br>
+                                    코오롱 워크웨어는 기업의 이미지나 특징에 맞는 <br>
+                                    아이덴티티를 연구하여 기업 맞춤형 솔루션을 제안합니다. 
+                               </div>
+                               <div class="p">
+                                    기업의 인지도를 높이는 것은 물론 직원들에겐 <br>
+                                    소속감을 고취시키고 소비자에겐 신뢰를 얻을 수 있는 <br>
+                                    유니폼을 만들겠습니다. 
+                               </div>
+                            </div>
+                            <div class="bot-lk basic-tx-ani">
+                                <div class="has-line"><p><a href="https://www.kolonworkwear.com/cs_detail2.html">자세히 보기</a></p></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-inner" id="main_slide4">
+                        <div class="l-cts">
+                            <h3 class="mid-p basic-tx-ani">
+                                <div class="tx-line"><p>작업자의</p></div>
+                                <div class="tx-line"><p>가치를 높이는</p></div>
+                                <div class="tx-line"><p>전문 워크웨어</p></div>
+                            </h3>
+
+                            <div class="bot-p ani">
+                               <div class="p">
+                                    볼디스트는 전문가를 위한 리얼 워크웨어 브랜드입니다.  <br>
+                                    방탄복에 사용되는 슈퍼섬유 아라미드, 나이론계의 <br>
+                                    황태자 코듀라 등 최강의 소재를 사용하여 내구성을 높였습니다. 
+                               </div>
+                               <div class="p">
+                                    볼디스트 브랜드는 거칠고 다양한 작업환경에서 일하는 <br>
+                                    작업자들의 이야기를 듣고 제품을 만들었습니다.  <br>
+                                    워커들을 가장 잘 이해하고 그들과 함께 만든 리얼 워크웨어.
+                               </div>
+                            </div>
+                            <div class="bot-lk basic-tx-ani">
+                                <div class="has-line"><p><a href="https://www.kolonworkwear.com/cs_detail4.html">자세히 보기</a></p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <!-- 210528 수정// -->
+        <div class="main-tl conts">
+            <div class="basic-tx-ani">
+                <h3>
+                    <div class="tx-line"><p>포트폴리오</p></div>
+                </h3>
+                <div class="rgt-lk has-line"><p><a href="https://www.kolonworkwear.com/portfolio_list.html">전체 보기</a></p></div>
+            </div>
+        </div>
+        <div class="worklist-real main-worklist conts">
+            <ul>
+                <!-- 221107 수정// -->
+                <li class="trans-ani-parent"><a href="https://www.kolonworkwear.com/portfolio_detail11.html" class="t-ani" style="transform: translate(0px, 0px);">
+                    <div class="pt trans-ani">
+                        <!-- 이미지 사이즈 : 540*790 -->
+                        <div class="inner" style="background-image: url(&quot;/img/portfolio/list11.jpg&quot;); transform: translate(0px, 0px);"></div>
+                        <div class="logo">
+                            <div class="tx">LG 전자</div>
+                        </div>
+                        <div class="plus ani"></div>
+                    </div>
+                    <p class="bd">LG 전자</p>
+                    <p class="ex">
+                        고객 만족을 위한 <br>
+                        완벽한 파트너 
+                    </p>
+                </a></li>
+                <li class="trans-ani-parent"><a href="https://www.kolonworkwear.com/portfolio_detail12.html" class="t-ani" style="transform: translate(0px, 0px);">
+                    <div class="pt trans-ani">
+                        <!-- 이미지 사이즈 : 540*790 -->
+                        <div class="inner" style="background-image: url(&quot;/img/portfolio/list12.jpg&quot;); transform: translate(0px, 0px);"></div>
+                        <div class="logo">
+                            <div class="tx">파파</div>
+                        </div>
+                        <div class="plus ani"></div>
+                    </div>
+                    <p class="bd">파파</p>
+                    <p class="ex">
+                    맞춤형 모빌리티 서비스의 <br>
+                    시작을 함께 합니다
+                    </p>
+                </a></li>
+                <li class="trans-ani-parent"><a href="https://www.kolonworkwear.com/portfolio_detail13.html" class="t-ani" style="transform: translate(0px, 0px);">
+                    <div class="pt trans-ani">
+                        <!-- 이미지 사이즈 : 540*790 -->
+                        <div class="inner" style="background-image: url(&quot;/img/portfolio/list13.jpg&quot;); transform: translate(0px, 0px);"></div>
+                        <div class="logo">
+                            <div class="tx">풀무원</div>
+                        </div>
+                        <div class="plus ani"></div>
+                    </div>
+                    <p class="bd">풀무원</p>
+                    <p class="ex">
+                    제품의 신선함까지 표현하려 <br>
+                    노력합니다
+                    </p>
+                </a></li>
+                <li class="trans-ani-parent"><a href="https://www.kolonworkwear.com/portfolio_detail14.html" class="t-ani" style="transform: translate(0px, 0px);">
+                    <div class="pt trans-ani">
+                        <!-- 이미지 사이즈 : 540*790 -->
+                        <div class="inner" style="background-image: url(&quot;/img/portfolio/list14.jpg&quot;); transform: translate(0px, 0px);"></div>
+                        <div class="logo">
+                            <div class="tx">맥도날드</div>
+                        </div>
+                        <div class="plus ani"></div>
+                    </div>
+                    <p class="bd">맥도날드</p>
+                    <p class="ex">
+                        크루를 위한 유니폼을 <br>
+                        만듭니다
+                    </p>
+                </a></li>
+                <!-- //221107 수정 -->
+                
+            </ul>
+        </div>
+        <!-- //210528 수정 -->
+
+        <!-- ABOUT -->
+        <!-- 221129 수정// -->
+        <div class="main-about conts">
+            <a href="https://www.kolonworkwear.com/about.html">
+                <div class="ani">
+                    <img src="./KOLON WORKWEAR_files/main_about3.png" alt="" class="im im-1">
+                    <!--<img src="/img/temp/main_about2.png" alt="" class="im im-2">
+                    <div class="caption">
+                        <div class="inner">
+                            볼디스트 모델<br>
+                            워커 신현호    
+                        </div>
+                    </div>-->
+                </div>
+                <div class="basic-tx-ani txts">
+                    <h3>
+                        <div class="tx-line"><p>코오롱 <span class="gt">FnC</span>가 만들면 </p></div>
+                        <div class="tx-line"><p>다르지 않을까</p></div>
+                        <div class="tx-line"><p>그 생각이 옳습니다!</p></div>
+                    </h3>
+                    <div class="bot-lk">
+                        <div class="has-line"><p>자세히 보기</p></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- //221129 수정 -->
+
+
+        <!-- 뉴스 210303 수정 -->
+        <div class="main-tl conts">
+            <div class="basic-tx-ani">
+                <h3>
+                    <div class="tx-line"><p>뉴스</p></div>
+                </h3>
+                <div class="rgt-lk has-line"><p><a href="https://www.kolonworkwear.com/news_list.html">전체 보기</a></p></div>
+            </div>
+        </div>
+        <!-- 211215 수정// -->
+        <div class="newslist-real main-news conts">
+            <div class="grid" style="position: relative; height: 949.188px;">
+                
+                <!-- 221209 수정 시작 -->
+                <div class="grid-item ani" style="position: absolute; left: 0px; top: 0px;"><a href="https://www.kolonworkwear.com/news_detail19.html">
+                    <img src="./KOLON WORKWEAR_files/news_list19.jpg" alt="">
+                    <p class="dt">2022. 10. 21</p>
+                    <p class="tl">
+                        어떤 신발로 <br>
+                        만들어드릴까요?
+                    </p>
+                    <p class="ex">
+                        워크웨어 브랜드 ‘볼디스트’가 ‘어떤 워크슈즈를 
+                        만들면 좋을까요?”라고 홈페이지에 질문을 
+                        게시한 후 댓글을 통해 받은 고객의 목소리다. 
+                    </p>
+                </a></div>
+                <div class="grid-item ani" style="position: absolute; left: 430px; top: 0px;"><a href="https://www.kolonworkwear.com/news_detail20.html">
+                    <img src="./KOLON WORKWEAR_files/news_list20.jpg" alt="">
+                    <p class="dt">2022. 08. 31</p>
+                    <p class="tl">
+                        볼디스트,<br>
+                        브랜드 입지 강화<br>
+                        본격 오프라인
+                        마케팅·유통 활동 시동
+                    </p>
+                    <p class="ex">
+                        강철부대로 이름 알린 중장비 오퍼레이터
+                        황충원 모델 발탁<br>
+                        하남 스타필드 첫 직영점 오픈…<br>
+                        음성 이어 광주, 기흥, 대구까지 연이어 매장 오픈
+                    </p>
+                </a></div>
+                <div class="grid-item ani" style="position: absolute; left: 860px; top: 0px;"><a href="https://www.kolonworkwear.com/news_detail21.html">
+                    <img src="./KOLON WORKWEAR_files/news_list21.jpg" alt="">
+                    <p class="dt">2022. 06. 13</p>
+                    <p class="tl">
+                        볼디스트, 과학·공학 <br>
+                        유튜브 채널 ‘긱블’에 <br>
+                        스폰서십 진행
+                    </p>
+                    <p class="ex">
+                        코오롱인더스트리FnC부문(이하 코오롱FnC)이 
+                        전개하는 워크웨어 브랜드 ‘볼디스트’가 과학·공학 
+                        컨텐츠를 제작하는 유튜브 채널 ‘긱블’과 손잡는다.
+                    </p>
+                </a></div>
+                <!-- 221209 수정 끝 -->
+                
+            </div>
+        </div>
+        <!-- //211215 수정 -->
+        <!-- //타이틀을 제외한 컨텐츠 영역 -->
+    <!-- ########## //contents ########## -->
+  </div>
+  <!-- ########## //wrapper ########## -->
+
+  <!-- ########## footer// ########## -->
+  <a href="https://www.kolonworkwear.com/#" class="f-t-top">TOP</a><!-- 210309 탑버튼 추가 -->
+  <!-- 푸터 노출 처리 및 수정 210423// -->
+  <footer>
+    <div class="footer-inner">
+      <div class="inner">
+        <div class="inner-bn ib-1">
+          <h2>On∙Tact</h2>
+          <p>
+            궁금한 사항을 풀어드립니다.
+          </p>
+          <a href="https://www.kolonworkwear.com/ontact.html">일반 문의</a>
+        </div>
+        <div class="inner-bn ib-2">
+          <h2>NEWS LETTER</h2>
+          <p>
+            코오롱 워크웨어의<br>
+            새로운 소식을 가장 먼저 만나보세요.
+          </p>
+          <div class="f-ontact">
+            <form action="https://www.kolonworkwear.com/">
+              <div class="ttt">
+                <span class="ip-shape-ipt">
+                  <input type="email" id="newsLetterEmail" placeholder="이메일을 입력하세요." autocomplete="off">
+                </span>
+              </div>
+
+              <!-- 수정// -->
+              <div class="bbb">
+                <a href="https://www.kolonworkwear.com/#" id="showAgreeInfoBtn" class="popup-loader" data-popup-class="kwwPopupPolicy">
+                  개인정보 수집 및 이용 전문보기
+                </a>
+                <span class="input_button">
+                  <input type="checkbox" id="agreeCheckbox">
+                  <label for="agreeCheckbox">개인정보 수집 및 이용 동의</label>
+                </span>
+              </div>
+              <!-- //수정 -->
+
+              <button id="newsletterSubmitBtn" type="button" class="bt"><i>확인</i></button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btb-inner">
+        <h2>KOLON WORKWEAR</h2>
+        <div class="site-info">
+          코오롱인더스트리(주) FnC부문<br>
+          대표이사 : 유석진 / 서울특별시 강남구 삼성로 518 <br>
+          대표메일 : <a href="mailto:workwear@kolon.com">workwear@kolon.com</a>
+          <br>
+          TEL : 02-3677-8655 / FAX : 02-3677-7546<br>
+          통신판매업신고 : 제2017-서울강남-02297호<br>
+          사업자등록번호 : 138-85-19612 <a href="https://www.ftc.go.kr/www/bizCommView.do?key=232&amp;apv_perm_no=2017322016230202297&amp;pageUnit=10&amp;searchCnd=wrkr_no&amp;searchKrwd=1388519612&amp;pageIndex=1" target="_blank" rel="noopener noreferrer" class="lk">사업자정보 확인 &gt;</a><br>
+        </div>
+
+        <div class="site-rvcenter">
+          고객님은 안전거래를 위해 결제 시 저희 사이트에서 가입한
+          구매안전 서비스를 이용하실 수 있습니다.
+          <div>
+            <a href="https://pgweb.uplus.co.kr/ms/escrow/s_escrowYn.do?mertid=joykolon" target="_blank" rel="noopener noreferrer">토스페이먼츠 <span class="ln">가입확인</span></a>
+            <a href="https://pg.nicepay.co.kr/issue/IssueEscrow.jsp?Mid=kolon0001m&amp;CoNo=1388519612" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, &quot;_popup&quot;, &quot;width=452, height=372, top=354, left=747&quot;);return false;">나이스페이먼츠
+              <span class="ln">가입확인</span></a>
+          </div>
+        </div>
+
+        <div class="site-copy">ⓒ KOLON WORKWEAR all rights reserved</div>
+
+        <div class="site-f-right">
+          <div class="menu">
+            <div>
+              <span>
+                <a href="https://store.kolonworkwear.com/Login" target="_blank" rel="noopener noreferrer">로그인</a>
+              </span>
+              <span>
+                <a href="https://store.kolonworkwear.com/TermsAndConditions/Online" target="_blank" rel="noopener noreferrer">이용약관</a>
+              </span>
+            </div>
+            <div>
+              <span>
+                <a href="https://store.kolonworkwear.com/Notice" target="_blank" rel="noopener noreferrer">고객센터</a>
+              </span>
+              <span class="b">
+                <a href="https://store.kolonworkwear.com/TermsAndConditions/Privacy" target="_blank" rel="noopener noreferrer">개인정보처리방침</a>
+              </span>
+            </div>
+          </div>
+
+          <div class="menu-f">
+            <b>02-3677-8655</b>
+            <p>
+              AM 10:00 ~ PM 05:00 (토, 일, 공휴일 휴무)<br>
+              (점심시간 PM 12:00 ~ PM 01:30)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- //푸터 노출 처리 및 수정 210423 -->
+  <!-- ########## //footer ########## -->
+
+  <!-- ########## 팝업 210210 추가// ########## -->
+  <div class="kwwPopupLayer"></div>
+  <div class="kwwPopupWrapper kwwPopupPolicy">
+    <h2>개인정보 수집 및 이용</h2>
+    <div class="policy tit-etc-scrl">
+      <!-- 210415 클래스 추가 -->
+      <h3>1. 개인정보의 수집 항목</h3>
+      <p>
+        코오롱인더스트리 FnC부문은 단체 주문 문의 및 상담을 위해 아래와 같은 개인정보를 수집하고 있습니다.<br>
+        (1) 필수 : 성명, 연락처, 이메일 주소, 상담 문의 내용 (제목, 내용)<br>
+        (2) 선택 : 회사/단체명, 사업정보, 첨부 파일
+      </p>
+      <h3>2. 개인정보의 이용목적</h3>
+      <p>
+        수집한 개인정보를 아래와 같은 목적을 위해 활용합니다.<br>
+        (1) 서비스 제공을 위한 정보 활용 : 단체 주문 상담 서비스(이메일 상담, 화상 상담)<br>
+        (2) 서비스 정보 컨텐츠 제공 : 제품 소개 및 안내(뉴스레터)
+      </p>
+      <h3>3. 개인정보의 보유 및 이용기간 </h3>
+      <p>
+        아래와 같이 동의받은 이용자의 개인정보를 이용 보관함을 원칙으로 하며, 보유 기간 이후 해당 정보를 지체 없이 파기 합니다.<br>
+        (1) 이메일 문의, 상담 이용 시 수집된 개인정보 : 3년 <br>
+        (2) 단체 주문 및 거래가 발생한 경우 수집된 개인정보 : 5년<br>
+        (3) 상법, 국세기본법, 전자상거래법 등 관련 법령에 의하여 다음과 같이 일정기간 보유하여야 할 필요가 있을 경우, <br>
+        그 보관의 목적으로만 이용하며 보존 기간 및 보존 항목은 아래와 같습니다.<br>
+        - 계약 또는 청약철회 등에 관한 기록: 5년(전자상거래 등에서의 소비자보호에 관한 법률)<br>
+        - 대금 결제 및 재화 등의 공급에 관한 기록: 5년(전자상거래 등에서의 소비자보호에 관한 법률)<br>
+        - 소비자 불만 또는 분쟁 처리에 관한 기록: 3년(전자상거래 등에서의 소비자보호에 관한 법률)<br>
+        - 납세 증거에 관한 기록 : 5년 (국세 기본법)<br>
+        - 전표 또는 이와 유사한 서류에 포함된 개인정보: 5년(상법)<br>
+        - 통신사실확인자료 제공 시 이용자 확인에 필요한 성명, 전화번호 등: 1년(통신비밀보호법)
+      </p>
+      <h3>4. 동의 거부권 및 미동의에 대한 불이익 안내</h3>
+      <p>
+        본 개인정보 수집 이용에 대해 거부하실 수 있으며, 미동의 시 상담 및 단체주문 등 서비스 신청과 이용에 제약이 있을 수 있습니다.
+      </p>
+    </div>
+    <a href="https://www.kolonworkwear.com/#" class="bt-tp-cls">닫기</a>
+  </div>
+  <!-- ########## //팝업 ########## -->
+
+  <!-- ########## 화상 채팅 신청 210401 삭제// ########## -->
+  <!-- <div class="ontact-nav">
+    <div class="nav-inner">
+      <div class="has-sp sp-1">
+        <p class="top">
+          화상 상담은 ZOOM<br>
+          어플리케이션을 통해 이루어지므로<br>
+          카메라가 장착된 폰, 노트북, 웹캠이<br>
+          장착된 PC가 필요합니다
+        </p>
+      </div>
+
+      <div class="has-sp sp-2">
+        <p class="top-title">
+          원하시는 상담일시를<br>
+          알려주세요
+        </p>
+      </div>
+      <div class="iPT has-sp sp-3">
+        <p>
+          <span class="ip-shape-ipt">
+            <input type="text" class="ipt datepicker" id="consulting_date" readonly="readonly">
+            <label for="consulting_date">상담 날짜 선택 <em>*</em></label>
+          </span>
+        </p>
+        <p>
+          <span class="sl-shape-sel">
+            <select name="consulting_time" id="consulting_time">
+              <option value="">선택하세요</option>
+              <option value="">10:00</option>
+              <option value="">11:00</option>
+              <option value="">14:00</option>
+              <option value="">15:00</option>
+              <option value="">16:00</option>
+              <option value="">17:00</option>
+            </select>
+            <label for="consulting_time">상담 시간 선택 <em>*</em></label>
+          </span>
+        </p>
+      </div>
+      <ul class="iPT-ex has-sp sp-4">
+        <li>
+          <p>예약된 일정에 따라 화상상담을 하실 수 있는 링크를 SMS 혹은 이메일로 보내드립니다.</p>
+        </li>
+        <li>
+          <p>안내 받은 링크를 클릭하시면 전담상담원과 1:1 화상상담을 하실 수 있습니다. </p>
+        </li>
+      </ul>
+      <div class="bt has-sp sp-5">
+        <p><a href="" class="blk">화상 예약</a></p>
+      </div>
+      <div class="bts has-sp sp-6">
+        <p>
+          <a href="https://www.zoom.us/download" target="_blank" class="down" rel="noopener noreferrer">PC용 ZOOM
+            다운<i></i></a>
+          <a href="https://play.google.com/store/apps/details?id=us.zoom.videomeetings" target="_blank" class="down"
+            rel="noopener noreferrer">Android용 ZOOM 다운<i></i></a>
+          <a href="https://apps.apple.com/us/app/id546505307" target="_blank" class="down"
+            rel="noopener noreferrer">iOS용 ZOOM 다운<i></i></a>
+        </p>
+      </div>
+    </div>
+  </div>
+  <a href="#" class="ontact-nav-closer">
+    <i></i>
+    <i></i>
+    <i></i>
+  </a> -->
+  <!-- ########## //화상 채팅 신청 210401 삭제 ########## -->
+
+  <!-- ########## navigation 210401 수정 | 카피라이트 등 문구 수정 및 온택트 메뉴 노출 처리// ########## -->
+  <div class="nav-bg"></div>
+  <nav class="">
+    <div class="nav-inner">
+      <ul class="menus">
+        <li class="has-sp sp-1">
+          <p><a href="https://www.kolonworkwear.com/cs_list.html">Case study</a></p>
+        </li>
+        <li class="has-sp sp-2">
+          <p><a href="https://www.kolonworkwear.com/portfolio_list.html">Portfolio</a></p>
+        </li>
+        <li class="has-sp sp-3">
+          <p><a href="https://www.kolonworkwear.com/news_list.html">News</a></p>
+        </li>
+        <li class="has-sp sp-4">
+          <p><a href="https://www.kolonworkwear.com/about.html">About</a></p>
+        </li>
+        <li class="has-sp sp-5">
+          <p><a href="https://www.kolonworkwear.com/ontact.html">On∙Tact</a></p>
+        </li>
+      </ul>
+      <div class="links">
+        <div class="lk-w has-sp sp-5">
+          <!-- 아래 href값과 onclick의 width/height/top/left 값은 적절하게 적용 부탁 드립니다. -->
+          <p><a href="https://store.kolonworkwear.com/Login" target="_blank" rel="noopener noreferrer">LG전자
+              서비스군 근무복 구매</a></p>
+        </div>
+        <div class="tx-w has-sp sp-6">
+          <p>02-3677-8655</p>
+          <p><a href="mailto:workwear@kolon.com" class="tx">workwear@kolon.com</a></p>
+        </div>
+        <address class="has-sp sp-7">
+          <p>코오롱인더스트리(주) FnC부문 서울특별시 강남구 삼성로 518</p>
+          <p>ⓒ KOLON WORKWEAR all rights reserved</p><!-- 210423 수정 -->
+        </address>
+      </div>
+    </div>
+  </nav>
+  <a href="https://www.kolonworkwear.com/#" class="nav-viewer">
+    <i></i>
+    <i></i>
+    <i></i>
+  </a>
+  <!-- ########## //navigation 210401 수정 ########## -->
+
+  <script src="./KOLON WORKWEAR_files/jquery.min.js.다운로드"></script><!-- jquery js -->
+  <script src="./KOLON WORKWEAR_files/vendor.js.다운로드"></script><!-- vendor js -->
+  <script src="./KOLON WORKWEAR_files/common.js.다운로드"></script><!-- 공통 js -->
+  <script src="./KOLON WORKWEAR_files/ontact.js.다운로드"></script><!-- ontact js -->
+
+
+
+</body></html>

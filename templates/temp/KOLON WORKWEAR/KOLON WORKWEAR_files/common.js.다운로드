@@ -1,0 +1,646 @@
+//news list start
+function news_list_init (){
+      var elem = document.querySelector('.newslist-real .grid');
+      // console.log(elem);
+      if (elem != null) {
+        var msnry = new Masonry( elem, {
+          // options
+          itemSelector: '.grid-item',
+          columnWidth: 430
+        });
+      }
+}
+news_list_init();
+$(window).on('load', function(){
+    news_list_init();
+});
+//news list end
+
+window.kolonWorkwear = {};
+(function($){
+    var func = {};
+    func.ojj = {
+    	init: function(){
+            var _self = this;
+            _self.MENU();
+
+            _self.news_detail();
+            _self.ontact();
+            _self.about();
+            _self.portfolio_detail();
+
+            _self.MAIN();
+            _self.POPUP();
+
+            _self.TEFT();
+            _self.TSCRL();
+            _self.TOP();
+
+    	},
+      MENU: function(){//메뉴 실행
+          var $menu = $('a.nav-viewer'),
+              $nav = $('nav'),
+              $body = $('body'),
+              $nav_bg = $('.nav-bg');
+          $menu.on('click', function(e){
+            e.preventDefault();
+            var $this = $(this);
+            $this.toggleClass('is-close');
+            $nav.toggleClass('is-active');
+
+            $body.toggleClass('is-hidden');
+
+
+            $nav_bg.toggleClass('is-active');
+
+            // if ($nav.hasClass('is-active')) {
+            //     // $nav_open = true;
+
+            // } else {
+            //     // $nav_open = false;
+            // }
+
+          });
+          $nav_bg.on('click', function(e){
+            // e.preventDefault();
+            var $this = $(this);
+            $menu.removeClass('is-close');
+            $nav.removeClass('is-active');
+
+            $body.removeClass('is-hidden');
+
+
+
+            $this.removeClass('is-active');
+            // $nav_open = false;
+          });
+      },
+      POPUP: function(){//팝업
+        var $loader = $('.popup-loader'),
+            $close = $('.kwwPopupWrapper .bt-tp-cls'),
+            $active_class = "is-active",
+            $layer = $('.kwwPopupLayer');
+        $loader.on('click', function(e){//열기
+          e.preventDefault();
+          var $popup = $('.' + $(this).attr('data-popup-class')),
+              $popup_h = $popup.outerHeight(),
+              $window_h = $(window).height();
+          $popup.addClass($active_class);
+          $layer.fadeIn('fast');
+
+          // if ($window_h > $popup_h) {
+            $popup.css({ top: '50%', marginTop: ($popup_h/2*-1) + 'px' });
+          // } else {
+          //   $popup.css({ top: 0, marginTop: '0px' });
+          // }
+        });
+        $close.on('click', function(e){//닫기
+          e.preventDefault();
+          var $popup = $(this).parent();
+          $popup.removeClass($active_class);
+          $layer.fadeOut('fast');
+        });
+        $layer.on('click', function(e){//닫기
+          var $popup = $('.kwwPopupWrapper');
+          $popup.removeClass($active_class);
+          $(this).fadeOut('fast');
+        });
+      },
+      TOP: function(){//TOP 버튼
+        var $f_btn = $('a.f-t-top');
+        $f_btn.on('click', function(){
+          $('html, body').stop().animate({ scrollTop: 0 }, 400);
+          return false;
+        });
+      },
+      TEFT: function() {//스크롤 효과 210319 수정
+            var n = $(window),
+            i = n.scrollTop(),
+            $header = $("header"),
+            $active_class = "is-active",
+            $menu = $("a.nav-viewer, a.ontact-nav-closer"),
+            $wrapper = $(".wrapper"),
+            $footer = $("footer"),
+            $f_btn = $('a.f-t-top');
+
+        if (i >= n.height()) {
+          $f_btn.addClass($active_class);
+          // var $pos = $wrapper.offset().top + $wrapper.outerHeight() + 200;
+
+          if ($footer.length > 0) {
+            var $pos = $footer.offset().top;  
+          }
+          if (i >= $pos - n.height()) {//40
+            if ($footer.length > 0) {
+              $f_btn.css({ position: 'absolute', bottom: 'auto', top: $pos - $f_btn.outerHeight() - 40 });
+            }
+          } else {
+            $f_btn.css({ position: 'fixed', bottom: 40, top: 'auto' });
+          }
+        } else {
+          $f_btn.removeClass($active_class);
+          // console.log($footer.length);
+        }
+        
+        
+        var $about_inner = $(".about-top .a-t-inner");
+        if ($about_inner.length > 1) {
+            var $about_inner_space = 100,
+                $about_inner_len = $about_inner.length,
+                $about_inner_val = $about_inner_space * $about_inner_len,
+                $about_ot = $about_inner.closest(".about-top").offset().top;
+            $about_inner.parent().addClass("fixed-ani"), $about_inner.closest(".about-top").css({
+                paddingBottom: $about_inner_val + "px"
+            }), $about_inner.removeClass($active_class), $about_inner.each(function() {
+                var t = $(this).index();
+                t != $about_inner_len - 1 ? i >= $about_ot + $about_inner_space * t && i < $about_ot + $about_inner_space * (t + 1) && $about_inner.eq(t).addClass($active_class) : i >= $about_ot + $about_inner_space * t && $about_inner.eq(t).addClass($active_class)
+            })
+        } else 1 == $about_inner.length && $about_inner.addClass($active_class);
+        var $about_ttee = $(".about-real-4 .ttee");
+        if ($about_ttee.length > 0 && $about_ttee.each(function() {
+                var t = $(this),
+                    e = t.offset().top,
+                    o = t.outerHeight(),
+                    a = t.find("img"),
+                    s = -1 * (2560 - a.width()),//210401 수정
+                    r = 0,
+                    _ = 1;
+                (t.index() + 1) % 2 == 0 && (_ = -1), i >= e - n.height() && i <= e + o ? (r = s / (e + o - (e - n.height())) * (i - (e - n.height())), a.css({
+                    transform: "translate(" + r * _ + "px, 0)"
+                })) : i < e - n.height() && a.css({
+                    transform: "translate(0, 0)"
+                })
+            }), i >= 40 ? ($header.addClass($active_class), $menu.addClass($active_class), $(".comm-kw-arrow").length > 0 && $(".comm-kw-arrow").addClass($active_class)) : ($header.removeClass($active_class), $menu.removeClass($active_class), $(".comm-kw-arrow").length > 0 && $(".comm-kw-arrow").removeClass($active_class)), $footer.length > 0) {
+            var $footer_su = $(document).height() - (n.height() + $footer.outerHeight()),
+                $val = 0;
+            //210401 삭제 시작
+            // i >= $footer_su ? (
+            //   //$footer.find(".footer-inner").height(i - $footer_su), 
+            //   $val = (i - $footer_su) / (i - $footer_su + $footer.outerHeight()) * 2, 
+            //   $footer.find(".footer-inner").css({
+            //     opacity: $val
+            // })) : (
+            // //$footer.find(".footer-inner").height(0), 
+            // $footer.find(".footer-inner").css({
+            //     opacity: 0
+            // }))
+            //210401 삭제 끝
+        }
+        $wrapper.find(".once-ani-conts").each(function() {
+            var t = $(this),
+                e = ($(this), t.find(".ani")),
+                o = t.find(".basic-tx-ani");
+            e.length > 0 && e.each(function() {
+                var t = $(this),
+                    e = t.offset().top;
+                t.outerHeight(), i >= e - n.height() + t.outerHeight() / 2 && t.addClass($active_class)
+            }), o.length > 0 && o.each(function() {
+                var t = $(this),
+                    e = t.offset().top;
+                t.outerHeight(), i >= e - n.height() + 0 && t.addClass($active_class)
+            })
+        }), $wrapper.find(".conts").each(function() {
+            var t = $(this),
+                e = ($(this), t.find(".ani")),
+                o = t.find(".basic-tx-ani"),
+                a = t.find(".fixed-ani");
+            e.length > 0 && e.each(function() {
+                var t = $(this),
+                    e = t.offset().top;
+                t.outerHeight(), i >= e - n.height() + 0 ? t.addClass($active_class) : t.removeClass($active_class)
+            }), o.length > 0 && o.each(function() {
+                var t = $(this),
+                    e = t.offset().top;
+                t.outerHeight(), i >= e - n.height() + 0 ? t.addClass($active_class) : t.removeClass($active_class)
+            }), a.length > 0 && a.each(function() {
+                var t = $(this),
+                    e = t.parent().offset().top,
+                    o = t.parent().outerHeight(),
+                    a = t.outerHeight();
+                i >= e ? (t.css({
+                    position: "fixed",
+                    top: 0
+                }), i > e + o - a && t.css({
+                    position: "absolute",
+                    top: o - a
+                })) : t.css({
+                    position: "absolute",
+                    top: 0
+                })
+            });
+            var s = t.find(".trans-ani-parent");
+            s.length > 0 && s.each(function() {
+                var t = $(this),
+                    e = t.offset().top,
+                    o = t.find(".trans-ani").outerHeight(),
+                    a = t.find(".trans-ani .inner"),
+                    s = a.outerHeight() - o,
+                    r = 0,
+                    _ = 0,
+                    h = t.index() + 1,
+                    c = -1;
+                c = h % 2 == 0 ? 1 : -1, t.closest(".main-worklist").hasClass("worklist-real") && (c = h % 2 == 0 ? -1 : 1), i >= e - n.height() && i <= e + o ? (r = s / (e + o - (e - n.height())) * (i - (e - n.height())), _ = 90 / (e + o - (e - n.height())) * (i - (e - n.height())), a.length > 0 && a.css({
+                    transform: "translate(0, -" + r + "px)"
+                }), t.find(".t-ani").css({
+                    transform: "translate(0, " + parseInt(_ * c) + "px)"
+                })) : i < e - n.height() ? (a.length > 0 && a.css({
+                    transform: "translate(0, 0)"
+                }), t.find(".t-ani").css({
+                    transform: "translate(0, 0)"
+                })) : i > e + o && t.find(".t-ani").css({
+                    transform: "translate(0, " + parseInt(90 * c) + "px)"
+                })
+            });
+            var r = t.find(".trans-ani-parent2");
+            r.length > 0 && r.each(function() {
+                var t = $(this),
+                    e = t.offset().top,
+                    o = t.find(".trans-ani").outerHeight(),
+                    a = t.find(".trans-ani .inner"),
+                    s = a.outerHeight() - o,
+                    r = 0;
+                t.index();
+                var _ = e - n.height();
+                i >= _ && i <= e + o ? (r = s / (e + o - _) * (i - _), a.length > 0 && a.css({
+                    transform: "translate(0, " + -1 * r + "px)"
+                })) : i < _ && a.length > 0 && a.css({
+                    transform: "translate(0, 0)"
+                })
+            })
+        });
+      },
+      TSCRL: function() {//스크롤 효과
+            var n = this;
+            $(window).on("scroll", function() {
+                n.TEFT()
+            })
+      },
+      MAIN: function(){//main
+            var $main_slide = $('.main-top');
+            if ($main_slide.length > 0) {
+                var $main_nav = $('.main-top-nav li'),
+                      $main_slide_ot = $main_slide.offset().top,
+                      $main_slide_oh = $main_slide.outerHeight();
+
+
+                //210310 추가 시작
+                var $main_nav_w = $('.main-top-nav'),
+                    $logo = $('header .logo'),
+                    $main_nav_w_h = ($(window).height() - (($logo.offset().top + $logo.outerHeight())*2));
+                // console.log($('a.nav-viewer').css('right'));
+                $main_nav_w.css({
+                  left: 'calc(5.2% - '+ (($main_nav_w.width()/2) - ($main_nav_w.outerHeight()/2)) +'px)'
+                });
+                // if ($main_nav_w.width() > $main_nav_w_h) {
+                //   $main_nav.css({ width: ($main_nav_w_h/4) - (40/3) })
+                // }
+                //210310 추가 끝
+
+                $main_nav.find('a').on('click', function(e){
+                    // e.preventDefault();
+                    var $child = $(this),
+                        $id = $($child.attr('href'));
+                  $('html, body').stop().animate({ scrollTop: $id.offset().top + 1 }, 400);
+                  // $main_nav.find('a').removeClass('on');
+                  // $child.addClass('on');
+                  return false;
+                });
+
+                $(window).on("scroll", function() {
+                   var t = $(window),
+                       nScrl = t.scrollTop(),
+                       $active_class = 'is-active',
+                       n = $main_slide.find('.slide-inner'),
+                       $header_h = 0;
+                    $main_nav.find('a').removeClass("on"), n.each(function() {
+                        var e = $(this).index();
+
+                        // if (e > 1 && e < n.length - 1) {
+                            var o = n.eq(e),
+                                a = o.outerHeight(),
+                                i = o.offset().top - (a/2);
+
+                            // $(this).find('a').removeClass("on");
+                            // if ((nScrl >= i) && (nScrl < (i + a))) {
+                            if ((nScrl >= i)) {
+                                $main_nav.eq(e).find('a').addClass("on");
+                                if (e != (n.length - 1)) {
+                                  if (nScrl > ($(this).next().offset().top - ($(this).next().outerHeight()/2))) {
+                                    $main_nav.eq(e).find('a').removeClass("on");
+                                  }  
+                                }
+                            }
+                        // }
+                    });
+
+
+
+                   if (nScrl > ($main_slide_ot + $main_slide_oh - (n.height()/2))) {
+                      $main_nav.closest('.main-top-nav').addClass('is-disabled');
+                   } else {
+                      $main_nav.closest('.main-top-nav').removeClass('is-disabled');
+                   }
+                   main_visual();
+                });
+                main_visual();
+                function main_visual(){
+                  var n = $(window),
+                      i = n.scrollTop(),
+                      $active_class = "is-active",
+                      $wrapper = $('.wrapper');
+                  $wrapper.find(".conts").each(function() {
+                      var a = $(this),
+                          $idx = a.index(),
+                          $conts = $(this),
+                          e = a.find(".ani-pt");
+
+                      // a.find(".obj");
+                      e.length > 0 && e.each(function() {//일반 애니
+                          var a = $(this),
+                              $idx = a.index(),
+                              e = a.closest('.slide-inner-bg-w').next().find('.slide-inner').eq($idx).offset().top;
+                              a_oh = a.closest('.slide-inner-bg-w').next().find('.slide-inner').eq($idx).outerHeight();
+                          // if ((i >= e - n.height() + (a_oh/2)) && (i < (e + (a_oh/2)))) {
+                          if ((i >= e - n.height() + (a_oh/2)) && (i < (e + (a_oh/4)))) {
+                            a.addClass($active_class)
+                          } else {
+                            a.removeClass($active_class)
+                          }
+                      });
+
+
+                    });
+                }
+            }
+      },
+
+      news_detail: function(){//news detail
+        var $slide_nm_class = '.detailbot-conts .swiper-container';
+        if ($($slide_nm_class).length > 0) {
+          var $slide = new Swiper($slide_nm_class, {
+
+
+              // loop: !0,
+              // centeredSlides: true,
+              slidesPerView: 'auto',
+              spaceBetween: 40,
+              grabCursor: true,
+
+          });
+          $slide.on('touchMove touchStart', function(){
+            // console.log(1);
+            $($slide_nm_class).addClass('is-trans');
+          });
+          $slide.on('touchEnd', function(){
+            $($slide_nm_class).removeClass('is-trans');
+          });
+        }
+      },
+      ontact: function(){//ontact
+        var $menu = $('a.ontact-nav-viewer'),
+            $close = $('a.ontact-nav-closer'),
+              $nav = $('.ontact-nav'),
+              $body = $('body'),
+              $nav_bg = $('.nav-bg');
+          $menu.on('click', function(e){
+            // e.preventDefault();
+
+            var $this = $(this);
+            // $this.toggleClass('is-close');
+            $close.addClass('is-close');
+            $nav.addClass('is-active');
+
+            $body.addClass('is-hidden');
+
+            $nav_bg.addClass('is-active');
+            return false;
+          });
+          $close.on('click', function(e){
+            // e.preventDefault();
+            var $this = $(this);
+            // $this.toggleClass('is-close');
+            $this.removeClass('is-close');
+            $nav.removeClass('is-active');
+
+            $body.removeClass('is-hidden');
+
+            $nav_bg.removeClass('is-active');
+            return false;
+          });
+          $nav_bg.on('click', function(e){
+            // e.preventDefault();
+            var $this = $(this);
+            $close.removeClass('is-close');
+            $nav.removeClass('is-active');
+
+            $body.removeClass('is-hidden');
+
+            $this.removeClass('is-active');
+          });
+
+          //input focus, blur
+          $('.ip-shape-ipt .ipt-val').on('focus', function(){
+            var $this = $(this),
+                $val = $this.val(),
+                $par = $this.parent();
+            $par.addClass('is-active');
+          });
+          $('.ip-shape-ipt .ipt-val').on('blur', function(){
+            var $this = $(this),
+                $val = $this.val(),
+                $par = $this.parent();
+            if ($val == '' || $val == null) {
+              $par.removeClass('is-active');
+            } else {
+              $par.addClass('is-active');
+            }
+          });
+
+          $('.ip-shape-ipt .file').on('click', function(){
+            var $this = $(this),
+                $val = $this.val(),
+                $par = $this.parent();
+                $par.addClass('is-active');
+          });
+          $('.ip-shape-ipt .file').on('change', function(){
+            var $this = $(this),
+                $par = $this.parent(),
+                $val = $par.find('.file_ipt').val();
+            if ($val == '' || $val == null) {
+              $par.removeClass('is-active');
+            } else {
+              $par.addClass('is-active');
+            }
+          });
+
+          $.datepicker.setDefaults({
+              dateFormat: 'yy-mm-dd',
+              prevText: '이전 달',
+              nextText: '다음 달',
+              monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+              monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+              dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+              dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+              dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+              showMonthAfterYear: true,
+              yearSuffix: '년'
+          });
+          $( ".ip-shape-ipt .datepicker" ).datepicker({
+            onSelect: function(dateText) {
+                // alert("Selected date: " + dateText + "; input's current value: " + this.value);
+                var $this = $(this),
+                    $val = dateText,
+                    $par = $this.parent();
+                if ($val == '' || $val == null) {
+                  $par.removeClass('is-active');
+                } else {
+                  $par.addClass('is-active');
+                }
+            },
+            onClose: function(dateText){
+                var $this = $(this),
+                    $val = dateText,
+                    $par = $this.parent();
+                if ($val == '' || $val == null) {
+                    $par.removeClass('is-active');
+                } else {
+                  $par.addClass('is-active');
+                }
+            },
+            beforeShow: function() {
+                setTimeout(function(){
+                    $('.ui-datepicker').css('z-index', 99999999999999);
+                }, 0);
+            }
+          });
+          $( ".ip-shape-ipt .datepicker" ).on('focus', function(){
+            var $this = $(this),
+                $val = $this.val(),
+                $par = $this.parent();
+            $par.addClass('is-active');
+          });
+
+          $('.sl-shape-sel select').on('click', function(){
+            var $this = $(this),
+                $val = $this.val(),
+                $par = $this.parent();
+                $par.addClass('is-active');
+          });
+
+          if ($('.ontact-real').length > 0 && $("footer").length > 0) {//210401 추가
+            $("footer .footer-inner .inner").hide();
+          }
+      },
+      about: function(){
+        var $num = $('.filter_num'),
+            $num2 = $('.filter_num2');
+        if ($num.length > 0) {
+            for (var i=0;i<=20;i++) {
+                $num.append('<span>' + i + '</span>');
+            }
+            for (var i=0;i<=80;i++) {
+                $num2.append('<span>' + i + '</span>');
+            }
+        }
+      },
+      portfolio_detail: function(){
+        var $slide_nm_class = '.workdetail-real-5 .swiper-container';
+        if ($($slide_nm_class).length > 0) {
+          var $slide = new Swiper($slide_nm_class, {
+
+
+              loop: !0,
+              centeredSlides: true,
+              slidesPerView: 'auto',
+              spaceBetween: 110,
+              grabCursor: true,
+
+          });
+          $slide.on('touchMove touchStart', function(){
+            // console.log(1);
+            $($slide_nm_class).addClass('is-trans');
+          });
+          $slide.on('touchEnd', function(){
+            $($slide_nm_class).removeClass('is-trans');
+          });
+        }
+      },
+    };
+    kolonWorkwear = func.ojj;
+    kolonWorkwear.init();
+
+    let clickedShowAgreeInfoBtn = false;
+    $("#showAgreeInfoBtn").click(function() {
+      clickedShowAgreeInfoBtn = true;
+    });
+    $("#newsletterSubmitBtn").click(function () {
+		const newsLetterEmailVal = $("#newsLetterEmail").val();
+		if ($.trim(newsLetterEmailVal) == "") {
+			alert("이메일을 입력하세요.");
+			return;
+		}
+		const emailRE = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (!emailRE.test(String(newsLetterEmailVal).toLowerCase())) {
+			alert("이메일 형식으로 입력해 주세요.");
+			return;
+		}
+    if (!clickedShowAgreeInfoBtn) {
+      alert('개인정보 수집 및 이용 전문 확인이 필요합니다.');
+      return;
+    }
+    if ($('#agreeCheckbox:checked').length === 0) {
+      alert('개인정보 수집 및 이용동의가 필요합니다.');
+      return;
+    }
+		const html = "뉴스레터 신청 이메일 : " + newsLetterEmailVal;
+		$.post(
+			"/api/contact",
+			{ title: "코오롱 워크웨어 뉴스레터 신청이 등록되었습니다.", html: html },
+			function (data) {
+				if (data && data.status == "ok") {
+					alert("뉴스레터 신청이 등록되었습니다.");
+					location.reload();
+				}
+			}
+		);
+	});
+})(jQuery);
+
+
+
+
+
+// if (!$nav_open) {
+
+    //IE11 and Edge Fixed Background Jumpy Glitch 개선 210415 삭제
+    // if(navigator.userAgent.match(/Trident\/7\./)) {
+    //     $('body').on("mousewheel", function () {
+    //         // event.preventDefault();
+
+    //         var wheelDelta = event.wheelDelta;
+
+    //         var currentScrollPosition = window.pageYOffset;
+    //         window.scrollTo(0, currentScrollPosition - wheelDelta);
+    //         return false;
+    //     });
+
+    //     $('body').keydown(function (e) {
+    //         // e.preventDefault(); // prevent the default action (scroll / move caret)
+    //         var currentScrollPosition = window.pageYOffset;
+
+    //         switch (e.which) {
+
+    //             case 38: // up
+    //                 window.scrollTo(0, currentScrollPosition - 120);
+    //                 break;
+
+    //             case 40: // down
+    //                 window.scrollTo(0, currentScrollPosition + 120);
+    //                 break;
+
+    //             default: return; // exit this handler for other keys
+    //         }
+    //         return false;
+    //     });
+    // }
+// }
