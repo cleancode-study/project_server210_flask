@@ -56,6 +56,11 @@ def index_POST():
 def hello(pagename):
     return render_template('index_output.html', data=pagename)
 
+@application.route('/request', methods = ['GET'])
+def request_test():
+    print(request.args.get('point'))
+    return request.args.get('point')
+
 @application.route('/mine_block', methods = ['GET'])
 def mine_block():
     print('mined a block')
