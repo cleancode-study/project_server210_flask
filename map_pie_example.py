@@ -34,9 +34,19 @@ def mappie_example() :
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
     sample_layout = html.Div(children=[
-        dcc.Graph(
-            id='graph1',
-            figure=fig
+        dcc.Markdown('''
+
+            # This is an <h1> tag
+
+            ## This is an <h2> tag
+
+            ###### This is an <h6> tag
+        '''),
+        html.Div(
+            dcc.Graph(
+                id='graph1',
+                figure=fig
+            ), style={ 'textAlign': 'center', 'color': '#888', 'display': 'flex', 'flex-direction': 'row', 'justify-content': 'center' }
         ),
     ])
 
